@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('uas');
             $table->float('akhir');
             $table->string('grade', 2);
-            $table->string('ket', 10);
+            $table->string('ket', 11);
             $table->string('image', 100);
         });
     }
