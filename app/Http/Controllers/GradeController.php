@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\Grade;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 use function PHPUnit\Framework\isNull;
 function gradeNilai($kehadiran, $tugas, $uts, $uas){
@@ -69,8 +70,9 @@ class GradeController extends Controller
             $image = 'default.jpeg';
 
         }else{
-            $image = Hash::make(time()).'.'.$request->image->extension();
+            $image = time().'.'.$request->image->extension();
             $request->image->move(public_path('storage').'/images', $image);
+
         }
         try{
             Grade::create([
@@ -85,7 +87,7 @@ class GradeController extends Controller
                 'image' => $image
             ]);
         }catch(Exception $e){
-            return redirect('nilai')->with('messages',['danger'=>'Data gagal disimpan']);
+            return redirect('nilai')->with('messages',['danger'=>'Data Gagal Disimpan'.$e]);
         }
         return redirect('nilai')->with('messages',['success'=>'Data Berhasil Disimpan']);
     }
@@ -95,7 +97,7 @@ class GradeController extends Controller
         try{
             $data = Grade::findOrFail($id);
         }catch (Exception $e){
-            return redirect('nilai')->with('messages',['danger'=>'Data tidak tersedia']);
+            return redirect('nilai')->with('messages',['danger'=>'Data Tidak Tersedia']);
         }
         return view('detail')->with('data', $data);
     }
@@ -106,7 +108,7 @@ class GradeController extends Controller
         try{
             $data = Grade::findOrFail($id);
         }catch(Exception $e){
-            return redirect('nilai')->with('messages',['danger'=>'Data tidak tersedia']);
+            return redirect('nilai')->with('messages',['danger'=>'Data Tidak Tersedia']);
         }
         return view('form')->with('data', $data);
     }
@@ -116,6 +118,14 @@ class GradeController extends Controller
         try{
             $data = Grade::findOrFail($id);
             $result = gradeNilai($request->kehadiran, $request->tugas, $request->uts, $request->uas);
+            if($request->image !== $data->image){
+                if(Storage::delete($data->image)) {
+                    $image_dir = public_path('storage').'/images/'.$image;
+                    unlink($image_dir);
+                 }
+                $image = time().'.'.$request->image->extension();
+                $request->image->move(public_path('storage').'/images', $image);
+            }
             $data->update([
                 'nama' => $request->nama,
                 'kehadiran' => $request->kehadiran,
@@ -128,10 +138,10 @@ class GradeController extends Controller
                 'image' => $image
             ]);
         }catch(Exception $e){
-            return back()->with('messages',['danger'=>'Data gagal diupdate']);
+            return back()->with('messages',['danger'=>'Data Gagal Diupdate']);
         }
 
-        return redirect('nilai')->with('messages',['success'=>'Data Berhasil Disimpan']);
+        return redirect('nilai')->with('messages',['success'=>'Data Berhasil Diupdate']);
     }
 
 
@@ -140,9 +150,9 @@ class GradeController extends Controller
             $data = Grade::find($id);
             $data->delete();
         }catch(Exception $e){
-            return redirect('nilai')->with('messages',['danger'=>'Data gagal dihapus']);
+            return redirect('nilai')->with('messages',['danger'=>'Data Gagal Dihapus']);
         }
-        return redirect('nilai')->with('messages',['success'=>'Data berhasil dihapus']);
+        return redirect('nilai')->with('messages',['success'=>'Data Berhasil Dihapus']);
     }
 }
 
