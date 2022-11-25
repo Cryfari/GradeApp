@@ -7,32 +7,32 @@
             @method('put')
         @endif
         <div class="form-floating mb-3">
-            <input class="form-control" name="nama"  type="text" placeholder="Nama" data-sb-validations="required" value="{{ isset($data) ? $data->nama:'' }}"/>
+            <input class="form-control" name="nama"  type="text" placeholder="Nama" data-sb-validations="required" value="{{ isset($data) ? $data->nama:'' }}" required/>
             <label for="nama">Nama</label>
             <div class="invalid-feedback" data-sb-feedback="nama:required">Nama is required.</div>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" name="kehadiran" type="number" min=0 max=15 placeholder="Kehadiran" data-sb-validations="required" value="{{ isset($data) ? $data->kehadiran:'' }}" />
+            <input class="form-control" name="kehadiran" type="number" min=0 max=15 placeholder="Kehadiran" data-sb-validations="required" value="{{ isset($data) ? $data->kehadiran:'' }}" required/>
             <label for="kehadiran">Kehadiran</label>
             <div class="invalid-feedback" data-sb-feedback="kehadiran:required">Kehadiran is required.</div>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" name="tugas" type="number" min=0 max=100 placeholder="Nilai Tugas" data-sb-validations="required" value="{{ isset($data) ? $data->tugas:'' }}" />
+            <input class="form-control" name="tugas" type="number" min=0 max=100 placeholder="Nilai Tugas" data-sb-validations="required" value="{{ isset($data) ? $data->tugas:'' }}" required/>
             <label for="nilaiTugas">Nilai Tugas</label>
             <div class="invalid-feedback" data-sb-feedback="nilaiTugas:required">Nilai Tugas is required.</div>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" name="uts" type="number" min=0 max=100 placeholder="Nilai UTS" data-sb-validations="required" value="{{ isset($data) ? $data->uts:'' }}" />
+            <input class="form-control" name="uts" type="number" min=0 max=100 placeholder="Nilai UTS" data-sb-validations="required" value="{{ isset($data) ? $data->uts:'' }}" required/>
             <label for="nilaiUts">Nilai UTS</label>
             <div class="invalid-feedback" data-sb-feedback="nilaiUts:required">Nilai UTS is required.</div>
         </div>
         <div class="form-floating mb-3">
-            <input class="form-control" name="uas" type="number" min=0 max=100 placeholder="Nilai UAS" data-sb-validations="required" value="{{ isset($data) ? $data->uas:'' }}" />
+            <input class="form-control" name="uas" type="number" min=0 max=100 placeholder="Nilai UAS" data-sb-validations="required" value="{{ isset($data) ? $data->uas:'' }}" required/>
             <label for="nilaiUas">Nilai UAS</label>
             <div class="invalid-feedback" data-sb-feedback="nilaiUas:required">Nilai UAS is required.</div>
         </div>
         <div class="form-floating mb-3">
-            <input name="image" type="file" name="image" data-sb-validations="required" accept="image/*"/>
+            <input name="image" type="file" name="image" data-sb-validations="required" accept="image/*" required/>
             <div class="invalid-feedback" data-sb-feedback="gambar:required">Gambar is required.</div>
         </div>
 
